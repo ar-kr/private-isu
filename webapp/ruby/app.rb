@@ -122,12 +122,11 @@ module Isuconp
           end
           post[:comments] = comments.reverse
 
-          post[:user] = db.prepare('SELECT * FROM `users` WHERE `id` = ?').execute(
-            post[:user_id]
-          ).first
+          post[:user] = {
+            account_name: post[:account_name],
+          }
 
-          posts.push(post) if post[:user][:del_flg] == 0
-          break if posts.length >= POSTS_PER_PAGE
+          posts.push(post)
         end
 
         posts
